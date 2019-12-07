@@ -1,0 +1,75 @@
+{% load index %}
+<!-- https://stackoverflow.com/a/29664945 -->
+{% if blockList %}
+  {% for block in blockList %}
+    {% if block.isGood and block.prevHashMatches%}
+        <table>
+          <tr>
+            <td bgcolor="#00FF00">Previous hash:</td>
+            <td bgcolor="#00FF00">{{ block.prevHash }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#00FF00">Delta (payload):</td>
+            <td bgcolor="#00FF00">{{ block.delta }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#00FF00">Transaction date:</td>
+            <td bgcolor="#00FF00">{{ block.time }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#00FF00">Nonce:</td>
+            <td bgcolor="#00FF00">{{ block.nonce }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#00FF00">Hash:</td>
+            <td bgcolor="#00FF00">{{ block.blockHash }}</td>
+          </tr>
+          <tr>
+            <td bgcolor="#00FF00">Solution Time [sec]:</td>
+            <td bgcolor="#00FF00">{{ block.solTime }}</td>
+          </tr>
+        </table>
+    {% else %}
+      <table>
+        <tr>
+          <td bgcolor="#FF0000">Previous hash:</td>
+          <td bgcolor="#FF0000">{{ block.prevHash }}</td>
+        </tr>
+        <tr>
+          <td bgcolor="#FF0000">Delta (payload):</td>
+          <td bgcolor="#FF0000">{{ block.delta }}</td>
+        </tr>
+        <tr>
+          <td bgcolor="#FF0000">Transaction date:</td>
+          <td bgcolor="#FF0000">{{ block.time }}</td>
+        </tr>
+        <tr>
+          <td bgcolor="#FF0000">Nonce:</td>
+          <td bgcolor="#FF0000">{{ block.nonce }}</td>
+        </tr>
+        <tr>
+          <td bgcolor="#FF0000">Hash:</td>
+          <td bgcolor="#FF0000">{{ block.blockHash }}</td>
+        </tr>
+        <tr>
+          <td bgcolor="#FF0000">Solution Time [sec]:</td>
+          <td bgcolor="#FF0000">{{ block.solTime }}</td>
+        </tr>
+      </table>
+    {% endif %}
+    <!--https://stackoverflow.com/a/19761466-->
+    <form action="#" method="get">
+      <input type=hidden value={{ block.id }} name="blockID">
+      <input type="submit" value="Mine sequential" name="MineSeq">
+      <input type="submit" value="Mine parallel" name="MinePara">
+      <input type="submit" value="Edit block" name="EditBlock">
+      <input type="submit" value="Delete block" name="DeleteBlock">
+    </form>
+  {% endfor %}
+{% endif %}
+<form action="/blocks/" method="post">
+  {% csrf_token %}
+  <label for="delta"> Delta: </label>
+  <input id="delta" type="int" name="delta">
+  <input type="submit" value="Add block" name="addBlock">
+</form>
